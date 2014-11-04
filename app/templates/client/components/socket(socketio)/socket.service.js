@@ -19,6 +19,37 @@ angular.module('<%= scriptAppName %>')
       socket: socket,
 
       /**
+       * Register listeners to sync an object with updates on a model
+       *
+       * Takes the object we want to sync, the model name that socket updates are sent from,
+       * and an optional callback function after new items are updated.
+       *
+       * @param {String} modelName
+       * @param {Object} object
+       * @param {Function} callback
+       */
+      syncObjectUpdates: function (modelName, object, cb) {
+        cb = cb || angular.noop;
+
+        /**
+         * Syncs item creation/updates on 'model:save'
+         */
+        socket.on(modelName + ':save', function (item) {
+          var oldItem = object;
+          var event = 'created';
+
+          // replace oldItem if it exists
+          if (oldItem) {
+            event = 'updated';
+          }
+
+          object = item;
+
+          cb(event, item, object);
+        });
+      },
+      
+      /**
        * Register listeners to sync an array with updates on a model
        *
        * Takes the array we want to sync, the model name that socket updates are sent from,
