@@ -98,6 +98,16 @@ angular.module('<%= scriptAppName %>')
        *
        * @param modelName
        */
+      unsyncObjectUpdates: function (modelName) {
+        socket.removeAllListeners(modelName + ':save');
+        socket.removeAllListeners(modelName + ':remove');
+      },
+
+      /**
+       * Removes listeners for a models updates on the socket
+       *
+       * @param modelName
+       */
       unsyncUpdates: function (modelName) {
         socket.removeAllListeners(modelName + ':save');
         socket.removeAllListeners(modelName + ':remove');
