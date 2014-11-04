@@ -11,5 +11,7 @@ angular.module 'socketMock', []
 
     receive: ->
 
+  syncObjectUpdates: ->
+  unsyncObjectUpdates: ->
   syncUpdates: ->
   unsyncUpdates: ->
